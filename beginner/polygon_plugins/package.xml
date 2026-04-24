@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<!--
+  @file package.xml
+  @brief polygon_plugins 包的包清单文件
+  @author gs
+  @version 0.0.0
+  
+  此文件定义了包的元数据、依赖项和构建信息。
+-->
+<package format="3">
+  <!-- 包名称 -->
+  <name>polygon_plugins</name>
+  
+  <!-- 包版本 -->
+  <version>0.0.0</version>
+  
+  <!-- 包描述 -->
+  <description>多边形插件包，实现了正方形和正三角形的具体插件</description>
+  
+  <!-- 维护者信息 -->
+  <maintainer email="gongshuang1989@gmail.com">gs</maintainer>
+  
+  <!-- 许可证 -->
+  <license>Apache-2.0</license>
+
+  <!-- 构建工具依赖 -->
+  <buildtool_depend>ament_cmake_ros</buildtool_depend>  <!-- ROS 2 扩展的构建系统 -->
+
+  <!-- 运行依赖 -->
+  <depend>polygon_base</depend>  <!-- 依赖多边形基类包 -->
+  <depend>pluginlib</depend>     <!-- 依赖插件库 -->
+
+  <!-- 测试依赖 -->
+  <test_depend>ament_lint_auto</test_depend>  <!-- 自动代码检查工具 -->
+  <test_depend>ament_lint_common</test_depend>  <!-- 通用代码检查工具 -->
+
+  <!-- 导出信息 -->
+  <export>
+    <!-- 构建类型 -->
+    <build_type>ament_cmake</build_type>
+  </export>
+
+</package>
+
+

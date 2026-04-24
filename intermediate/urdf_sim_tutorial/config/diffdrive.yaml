@@ -1,0 +1,88 @@
+# 差速驱动控制器配置文件
+# 用于 13-diffdrive.urdf.xacro 模型
+
+controller_manager:
+  ros__parameters:
+    # 控制器更新频率（Hz）
+    update_rate: 100
+    # 使用仿真时间
+    use_sim_time: true
+
+    # 关节状态广播器配置
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    # 头部控制器配置
+    head_controller:
+      type: position_controllers/JointGroupPositionController
+
+    # 夹持器控制器配置
+    gripper_controller:
+      type: position_controllers/JointGroupPositionController
+
+    # 差速驱动控制器配置
+    diff_drive_base_controller:
+      type: diff_drive_controller/DiffDriveController
+
+# 头部控制器参数
+head_controller:
+  ros__parameters:
+    # 控制的关节列表
+    joints:
+    - head_swivel
+    # 接口名称
+    interface_name: position
+
+# 夹持器控制器参数
+gripper_controller:
+  ros__parameters:
+    # 控制的关节列表
+    joints:
+    - gripper_extension
+    - left_gripper_joint
+    # 接口名称
+    interface_name: position
+
+# 差速驱动控制器参数
+diff_drive_base_controller:
+  ros__parameters:
+    # 发布频率（Hz）
+    publish_rate: 50.0
+
+    # 左轮关节名称列表
+    left_wheel_names: [left_front_wheel_joint, left_back_wheel_joint]
+    # 右轮关节名称列表
+    right_wheel_names: [right_front_wheel_joint, right_back_wheel_joint]
+
+    # 轮间距（米）
+    wheel_separation: 0.44
+    # 轮子半径（米）
+    wheel_radius: 0.035
+
+    # 机器人编码器输出的里程计协方差
+    # 这些值应该根据你的机器人的实际里程计数据进行调整
+    pose_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.03]
+    twist_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 0.03]
+
+    # 机器人描述的顶层框架（链接）
+    base_frame_id: base_link
+
+    # 是否使用带时间戳的速度
+    use_stamped_vel: false
+
+    # 机器人的速度和加速度限制
+    linear:
+      x:
+        has_velocity_limits: true
+        max_velocity: 0.2              # 最大线速度（米/秒）
+        min_velocity: -0.2             # 最小线速度（米/秒）
+        has_acceleration_limits: true
+        max_acceleration: 0.6          # 最大线加速度（米/秒²）
+    angular:
+      z:
+        has_velocity_limits: true
+        max_velocity: 2.0              # 最大角速度（弧度/秒）
+        min_velocity: -2.0             # 最小角速度（弧度/秒）
+        has_acceleration_limits: true
+        max_acceleration: 6.0          # 最大角加速度（弧度/秒²）
+        min_acceleration: -1.0         # 最小角加速度（弧度/秒²）

@@ -1,0 +1,14 @@
+# 关节状态广播器配置文件
+# 用于 09-publishjoints.urdf.xacro 模型
+
+controller_manager:
+  ros__parameters:
+    # 控制器更新频率（Hz）
+    update_rate: 100
+    # 使用仿真时间
+    use_sim_time: true
+
+    # 关节状态广播器配置
+    # 此控制器用于广播所有关节的状态信息
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+  @file plugins.xml
+  @brief 插件描述文件
+  @author ROS 2 官方教程
+  @version 0.1
+  
+  此文件定义了多边形插件的元数据，告诉 pluginlib 如何加载这些插件。
+-->
+<library path="polygon_plugins">
+    <!-- 正方形插件定义 -->
+    <class type="polygon_plugins::Square" base_class_type="polygon_base::RegularPolygon">
+      <description>This is a square plugin.</description>
+    </class>
+    <!-- 三角形插件定义，使用别名 "awesome_triangle" -->
+    <class type="polygon_plugins::Triangle" base_class_type="polygon_base::RegularPolygon" name="awesome_triangle">
+      <description>This is a triangle plugin.</description>
+    </class>
+</library>

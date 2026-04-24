@@ -1,0 +1,8 @@
+# 控制器管理器配置文件（最小化配置）
+# 用于 09a-minimal.urdf.xacro 模型
+
+controller_manager:
+  ros__parameters:
+    # 控制器更新频率（Hz）
+    # 这个值决定了控制器执行的频率，越高响应越快但占用资源越多
+    update_rate: 100

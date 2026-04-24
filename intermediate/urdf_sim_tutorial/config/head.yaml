@@ -1,0 +1,26 @@
+# 头部控制器配置文件
+# 用于 10-firsttransmission.urdf.xacro 和 11-limittransmission.urdf.xacro 模型
+
+controller_manager:
+  ros__parameters:
+    # 控制器更新频率（Hz）
+    update_rate: 100
+    # 使用仿真时间
+    use_sim_time: true
+
+    # 关节状态广播器配置
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    # 头部控制器配置
+    head_controller:
+      type: position_controllers/JointGroupPositionController
+
+# 头部控制器参数
+head_controller:
+  ros__parameters:
+    # 控制的关节列表
+    joints:
+    - head_swivel  # 头部旋转关节
+    # 接口名称
+    interface_name: position

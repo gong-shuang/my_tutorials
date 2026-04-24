@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<robot name="origins">
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.6" radius="0.2"/>
+      </geometry>
+      <!-- 设置浅红色 -->
+      <material name="light_red">
+        <color rgba="1.0 0.4 0.4 0.5"/>
+      </material>
+    </visual>
+  </link>
+
+  <link name="right_leg">
+    <visual>
+      <geometry>
+        <box size="0.6 0.1 0.2"/>
+      </geometry>
+      <!-- 设置浅蓝色 -->
+      <material name="light_blue">
+        <color rgba="0.4 0.4 1.0 0.5"/>
+      </material>
+      <origin rpy="0 1.57075 0" xyz="0 0 -0.3"/>
+    </visual>
+  </link>
+
+  <joint name="base_to_right_leg" type="fixed">
+    <parent link="base_link"/>
+    <child link="right_leg"/>
+    <origin xyz="0 0.20 0.25"/>
+  </joint>
+
+</robot>

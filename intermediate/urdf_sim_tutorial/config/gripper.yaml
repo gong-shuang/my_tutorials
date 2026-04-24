@@ -1,0 +1,41 @@
+# 夹持器控制器配置文件
+# 用于 12-gripper.urdf.xacro 模型
+
+controller_manager:
+  ros__parameters:
+    # 控制器更新频率（Hz）
+    update_rate: 100
+    # 使用仿真时间
+    use_sim_time: true
+
+    # 关节状态广播器配置
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    # 头部控制器配置
+    head_controller:
+      type: position_controllers/JointGroupPositionController
+
+    # 夹持器控制器配置
+    gripper_controller:
+      type: position_controllers/JointGroupPositionController
+
+# 头部控制器参数
+head_controller:
+  ros__parameters:
+    # 控制的关节列表
+    joints:
+    - head_swivel
+    # 接口名称
+    interface_name: position
+
+# 夹持器控制器参数
+gripper_controller:
+  ros__parameters:
+    # 控制的关节列表
+    joints:
+    - gripper_extension  # 夹持器伸缩关节
+    - left_gripper_joint  # 左夹持器关节
+    - right_gripper_joint  # 右夹持器关节
+    # 接口名称
+    interface_name: position
