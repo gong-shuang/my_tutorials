@@ -1,8 +1,8 @@
 # /**
 #  * @file example_main.launch.py
 #  * @brief 演示如何包含其他 launch 文件
-#  * 
-#  * 本文件展示了如何使用 IncludeLaunchDescription 包含其他 launch 文件，
+#  *
+#  * 本文件（父 launch 文件）展示了如何使用 IncludeLaunchDescription 包含其他 launch 文件 （子 launch 文件）
 #  * 并传递启动参数给被包含的 launch 文件。
 #  */
 
@@ -32,7 +32,9 @@ def generate_launch_description():
                 # 构建被包含文件的路径
                 PathJoinSubstitution(
                     [
-                        FindPackageShare("launch_tutorial"),  # 查找 launch_tutorial 包的共享目录
+                        FindPackageShare(
+                            "launch_tutorial"
+                        ),  # 查找 launch_tutorial 包的共享目录
                         "launch",  # 子目录
                         "example_substitutions.launch.py",  # 要包含的文件
                     ]

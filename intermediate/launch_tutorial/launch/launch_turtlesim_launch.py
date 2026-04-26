@@ -37,8 +37,13 @@ def generate_launch_description():
             IncludeLaunchDescription(
                 PathJoinSubstitution([launch_dir, "turtlesim_world_1.launch.py"])
             ),
+
+            # 2. 包含 turtlesim_world_1.launch.py 文件
+            # IncludeLaunchDescription(
+            #     PathJoinSubstitution([launch_dir, "turtlesim_world_2.launch.py"])
+            # ),
             
-            # 2. 使用 GroupAction 为 turtlesim2 命名空间包含 turtlesim_world_2.launch.py
+            # 3. 使用 GroupAction 为 turtlesim2 命名空间包含 turtlesim_world_2.launch.py
             GroupAction(
                 actions=[
                     PushRosNamespace("turtlesim2"),  # 设置命名空间为 turtlesim2
@@ -50,13 +55,7 @@ def generate_launch_description():
                 ]
             ),
             
-            # 3. 被注释的包含语句
-            # IncludeLaunchDescription(
-            #     PathJoinSubstitution([launch_dir, "turtlesim_world_2.launch.py"])
-            # ),
-            
             # 4. 包含 broadcaster_listener.launch.py 文件，并覆盖 target_frame 参数
-            # 5.参数覆盖
             IncludeLaunchDescription(
                 PathJoinSubstitution([launch_dir, "broadcaster_listener.launch.py"]),
                 launch_arguments={"target_frame": "carrot1"}.items(),  # 覆盖目标坐标系为 carrot1

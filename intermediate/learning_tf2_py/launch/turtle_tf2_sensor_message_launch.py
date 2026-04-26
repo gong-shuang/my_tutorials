@@ -18,19 +18,19 @@ def generate_launch_description():
                 output="screen",
             ),
             Node(
-                package="turtle_tf2_py",
+                package="learning_tf2_py",
                 executable="turtle_tf2_broadcaster",
                 name="broadcaster1",
                 parameters=[{"turtlename": "turtle1"}],
             ),
             Node(
-                package="turtle_tf2_py",
+                package="learning_tf2_py",
                 executable="turtle_tf2_broadcaster",
                 name="broadcaster2",
                 parameters=[{"turtlename": "turtle3"}],
             ),
             Node(
-                package="turtle_tf2_py",
+                package="learning_tf2_py",
                 executable="turtle_tf2_message_broadcaster",
                 name="message_broadcaster",
             ),

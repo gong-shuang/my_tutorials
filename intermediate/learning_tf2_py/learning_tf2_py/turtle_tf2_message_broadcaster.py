@@ -57,6 +57,7 @@ class PointPublisher(Node):
         self.turtle_spawning_service_ready = False  # 生成海龟的服务是否可用
         self.turtle_spawned = False  # 海龟是否成功生成
         self.turtle_pose_cansubscribe = False  # 是否可以订阅 turtle3 的话题
+        self.publishers_created = False  # 发布者和订阅者是否已创建（避免重复创建）
 
         # 创建定时器，每秒调用一次 on_timer 方法
         self.timer = self.create_timer(1.0, self.on_timer)
@@ -96,8 +97,8 @@ class PointPublisher(Node):
                 # 服务不可用
                 self.get_logger().info('Service is not ready')
 
-        # 如果海龟已生成且可以订阅话题
-        if self.turtle_pose_cansubscribe:
+        # 如果海龟已生成且可以订阅话题，且还未创建发布者/订阅者
+        if self.turtle_pose_cansubscribe and not self.publishers_created:
             # 创建速度命令发布者
             self.vel_pub = self.create_publisher(Twist, 'turtle3/cmd_vel', 10)
             
@@ -106,6 +107,9 @@ class PointPublisher(Node):
             
             # 创建 PointStamped 消息发布者
             self.pub = self.create_publisher(PointStamped, 'turtle3/turtle_point_stamped', 10)
+            
+            # 设置标志位，表示已创建发布者和订阅者
+            self.publishers_created = True
 
     def handle_turtle_pose(self, msg):
         """
@@ -114,6 +118,7 @@ class PointPublisher(Node):
         参数:
             msg: 海龟的姿态消息（包含位置和角度）
         """
+        
         # 创建速度命令消息
         vel_msg = Twist()
         vel_msg.linear.x = 1.0  # 线速度：1.0

@@ -39,7 +39,8 @@ def generate_launch_description():
                         "launch",  # 子目录
                         "turtle_tf2_demo_launch.py",  # 要包含的文件
                     ]
-                )
+                ),
+                launch_arguments={'target_frame': 'carrot1'}.items(),
             ),
             # 2. 启动固定坐标系广播器
             # 这个广播器会创建一个固定的 carrot1 坐标系
