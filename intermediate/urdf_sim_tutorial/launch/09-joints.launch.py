@@ -76,10 +76,18 @@ def generate_launch_description():
     )
 
     # 执行命令加载关节状态广播器控制器
-    load_joint_state_controller = ExecuteProcess(
-        cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
-             'joint_state_broadcaster'],  # 命令参数
-        output='screen'  # 输出到屏幕
+    # load_joint_state_controller = ExecuteProcess(
+    #     cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
+    #          'joint_state_broadcaster'],  # 命令参数
+    #     output='screen'  # 输出到屏幕
+    # )
+
+    # 这是 ROS 2 Control 中用于 加载并激活控制器 的节点配置
+    load_joint_state_controller = Node(
+        package="controller_manager",
+        executable="spawner",      # spawner 会自动加载并激活控制器
+        arguments=["joint_state_broadcaster"],  # 告诉 spawner 要加载哪个控制器
+        output="screen"
     )
 
     # 返回完整的 LaunchDescription 对象

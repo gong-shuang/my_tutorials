@@ -34,10 +34,10 @@
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.actions import IncludeLaunchDescription
-from launch.substitutions import LaunchConfiguration
+from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from launch_ros.actions import Node
 from launch.actions import ExecuteProcess
-from launch_ros.substitutions import FindPackageShare, PathJoinSubstitution
+from launch_ros.substitutions import FindPackageShare
 
 
 def generate_launch_description():
@@ -77,17 +77,30 @@ def generate_launch_description():
     )
 
     # 执行命令加载关节状态广播器控制器
-    load_joint_state_controller = ExecuteProcess(
-        cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
-             'joint_state_broadcaster'],  # 命令参数
-        output='screen'  # 输出到屏幕
+    # load_joint_state_controller = ExecuteProcess(
+    #     cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
+    #          'joint_state_broadcaster'],  # 命令参数
+    #     output='screen'  # 输出到屏幕
+    # )
+    load_joint_state_controller = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["joint_state_broadcaster"],
+        output="screen"
     )
+
     
     # 执行命令加载头部控制器
-    load_head_controller = ExecuteProcess(
-        cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
-             'head_controller'],  # 命令参数
-        output='screen'  # 输出到屏幕
+    # load_head_controller = ExecuteProcess(
+    #     cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
+    #          'head_controller'],  # 命令参数
+    #     output='screen'  # 输出到屏幕
+    # )
+    load_head_controller = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["head_controller"],
+        output="screen"
     )
 
     # 返回完整的 LaunchDescription 对象

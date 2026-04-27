@@ -95,13 +95,50 @@ ros2 launch <package_name> <launch_file_name>
 代码来自github：https://github.com/ros/urdf_tutorial
 | 备注 | 说明 |
 |------|------|
-| Building a visual robot model | 通过6个例子展示如何创建和使用机器人模型 |
-| Building a movable robot model | 三种常用的有可移动关节：continuous、revolute and prismatic，并通过RViz软件，控制并展示关节的运动 |
+| Building a visual robot model | 通过6个例子展示如何创建和使用机器人模型，这6个人例子，从零开始搭建机器人模型，循序渐进。连杆（Link）和关节（Joint），连杆（Link）有外观和物理属性，外观属性（尺寸，颜色，形状），物理属性（质量，惯性矩阵，碰撞参数），关节（Joint）有6种连接类型，关节的原点。以及如何引用外部的 3D 模型文件。 |
+| Building a movable robot model | 三种常用的有可移动关节：continuous、revolute and prismatic，如何通过RViz软件控制并展示关节的运动 |
 | Adding physical and collision properties | 如何添加关节（link）的碰撞和惯性属性 |
 | Using Xacro to clean up your code | 如何使用Xacro包来简化代码，提高可维护性 |
+
+```
+对于章节Building a movable robot model，教程中的示例：
+ros2 launch urdf_tutorial display.launch.py model:=urdf/06-flexible.urdf
+
+会创建3个关键node：
+/joint_state_publisher
+/robot_state_publisher
+/rviz
+
+关键的话题：
+/joint_states
+/parameter_events
+/robot_description
+/rosout
+/tf
+
+初始流程是：
+1. 启动joint_state_publisher node，发布关节状态话题（/joint_states）。
+2. 启动robot_state_publisher node，发布机器人状态话题（/robot_description）。
+3. 启动rviz node，显示机器人模型和关节状态。
+
+在窗口 Joint State Publisher 中，控制滑动条可以改变RViz中机器人的关节角度，流程如下：
+节点/joint_state_publisher定期发送/joint_states话题，节点/robot_state_publisher收到该话题后，计算正运动学，然后发布tf2广播，节点/rviz收到新 TF2 消息 → rviz 更新对应连杆的位置 → 显示变化。
+
+```
+
+
 
 ## 14. urdf_sim_tutorial
 代码来自github：https://github.com/ros/urdf_sim_tutorial
 | 备注 | 说明 |
 |------|------|
-| Using a URDF in Gazebo | 如何将你的URDF机器人模型导入Gazebo仿真环境，并让它能够动起来 |
+| Using a URDF in Gazebo | 要让Gazebo里的机器人“活”起来，必须为它添加两样东西：插件（Plugins）和控制器（Controllers），“插件”作为Gazebo和ROS 2沟通的桥梁，“控制器”则负责根据用户输入的指令，控制机器人的运动。 |
+
+
+```
+章节 Using a URDF in Gazebo，最后的一个例子，控制小车车轮：ros2 launch urdf_sim_tutorial 13-diffdrive.launch.py
+在窗口 rqt_robot_steering__RobotSteering 中，控制滑动条机器人的车轮没有动，这是因为 rqt_robot_steering 自身的bug，此时改用命令：
+ros2 topic pub /diff_drive_base_controller/cmd_vel_unstamped geometry_msgs/msg/Twist "{linear: {x: 0.5, y: 0.0, z: 0.0}, angular: {x: 0.0, y: 0.0, z: 0.0}}"
+也是可以控制小车前进
+
+```

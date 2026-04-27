@@ -77,24 +77,42 @@ def generate_launch_description():
     )
 
     # 执行命令加载关节状态广播器控制器
-    load_joint_state_controller = ExecuteProcess(
-        cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
-             'joint_state_broadcaster'],  # 命令参数
-        output='screen'  # 输出到屏幕
+    # load_joint_state_controller = ExecuteProcess(
+    #     cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
+    #          'joint_state_broadcaster'],  # 命令参数
+    #     output='screen'  # 输出到屏幕
+    # )
+    load_joint_state_controller = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["joint_state_broadcaster"],
+        output="screen"
     )
     
     # 执行命令加载头部控制器
-    load_head_controller = ExecuteProcess(
-        cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
-             'head_controller'],  # 命令参数
-        output='screen'  # 输出到屏幕
+    # load_head_controller = ExecuteProcess(
+    #     cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
+    #          'head_controller'],  # 命令参数
+    #     output='screen'  # 输出到屏幕
+    # )
+    load_head_controller = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["head_controller"],
+        output="screen"
     )
     
     # 执行命令加载夹持器控制器
-    load_gripper_controller = ExecuteProcess(
-        cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
-             'gripper_controller'],  # 命令参数
-        output='screen'  # 输出到屏幕
+    # load_gripper_controller = ExecuteProcess(
+    #     cmd=['ros2', 'control', 'load_controller', '--set-state', 'start',
+    #          'gripper_controller'],  # 命令参数
+    #     output='screen'  # 输出到屏幕
+    # )
+    load_gripper_controller = Node(
+        package="controller_manager",
+        executable="spawner",
+        arguments=["gripper_controller"],
+        output="screen"
     )
 
     # 返回完整的 LaunchDescription 对象

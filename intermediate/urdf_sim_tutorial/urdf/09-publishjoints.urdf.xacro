@@ -236,13 +236,21 @@
 
   <ros2_control name="GazeboSystem" type="system">
     <hardware>
+      <!-- 这个插件就是Gazebo与ROS 2沟通的桥梁 -->
       <plugin>gazebo_ros2_control/GazeboSystem</plugin>
     </hardware>
+    <!-- 在这里列出你想让Gazebo管理的所有关节 -->
     <joint name="head_swivel" />
+    <!-- <joint name="head_swivel">
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint> -->
   </ros2_control>
 
   <gazebo>
+    <!-- 这是Gazebo侧需要加载的ROS 2控制插件 -->
     <plugin filename="libgazebo_ros2_control.so" name="gazebo_ros2_control">
+      <!-- 这个YAML文件会告诉控制器该做什么 -->
       <parameters>$(find urdf_sim_tutorial)/config/joints.yaml</parameters>
     </plugin>
   </gazebo>

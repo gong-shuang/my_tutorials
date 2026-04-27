@@ -45,3 +45,10 @@ def generate_launch_description():
 
     # 返回完整的 LaunchDescription 对象
     return ld
+
+# 上面配置，相当于在终端执行如下命令
+# ros2 launch urdf_launch display.launch.py \
+#     urdf_package:=urdf_tutorial \
+#     urdf_package_path:=urdf/01-myfirst.urdf \
+#     rviz_config:=/opt/ros/humble/share/urdf_tutorial/rviz/urdf.rviz \
+#     jsp_gui:=true
