@@ -127,7 +127,6 @@ ros2 launch urdf_tutorial display.launch.py model:=urdf/06-flexible.urdf
 ```
 
 
-
 ## 14. urdf_sim_tutorial
 代码来自github：https://github.com/ros/urdf_sim_tutorial
 | 备注 | 说明 |
@@ -142,3 +141,27 @@ ros2 topic pub /diff_drive_base_controller/cmd_vel_unstamped geometry_msgs/msg/T
 也是可以控制小车前进
 
 ```
+
+## 15. urdf_tutorial_cpp
+| 备注 | 说明 |
+|------|------|
+| Using URDF with robot_state_publisher(C++) | robot_state_publisher 是 ROS 2 中的核心功能包 ，负责将机器人的关节状态转换为 TF（坐标变换）信息， 工作流程为：1. 读取URDF文件。 2. 订阅/joint_states话题，获取关节状态。2. 计算正运动学，将关节状态转换为 TF（坐标变换）信息。3. 将计算结果发布到 /tf 和 /tf_static 话题。 |
+
+```
+URDF 文件 → robot_state_publisher ← /joint_states
+                                     ↓
+                                正运动学计算
+                                     ↓
+                                /tf (坐标变换)
+                                     ↓
+                                RViz / Gazebo
+
+```
+
+
+## 16. urdf_tutorial_r2d2
+| 备注 | 说明 |
+|------|------|
+| Using URDF with robot_state_publisher(Python) | 要使用Python版本的robot_state_publisher，必须在Python代码中添加两行东西：1. 导入robot_state_publisher包，2. 初始化robot_state_publisher。 |
+
+
