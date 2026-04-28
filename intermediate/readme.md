@@ -145,16 +145,28 @@ ros2 topic pub /diff_drive_base_controller/cmd_vel_unstamped geometry_msgs/msg/T
 ## 15. urdf_tutorial_cpp
 | 备注 | 说明 |
 |------|------|
-| Using URDF with robot_state_publisher(C++) | robot_state_publisher 是 ROS 2 中的核心功能包 ，负责将机器人的关节状态转换为 TF（坐标变换）信息， 工作流程为：1. 读取URDF文件。 2. 订阅/joint_states话题，获取关节状态。2. 计算正运动学，将关节状态转换为 TF（坐标变换）信息。3. 将计算结果发布到 /tf 和 /tf_static 话题。 |
+| Using URDF with robot_state_publisher(C++) | 会创建两个节点：/urdf_tutorial_cpp和/robot_state_publisher, （1）节点/urdf_tutorial_cpp会发布两个话题：/tf和/joint_states， （2）节点/robot_state_publisher是 ROS 2 中的核心功能包 ，负责将机器人的关节状态转换为 TF（坐标变换）信息。 |
 
 ```
-URDF 文件 → robot_state_publisher ← /joint_states
-                                     ↓
-                                正运动学计算
-                                     ↓
-                                /tf (坐标变换)
-                                     ↓
-                                RViz / Gazebo
+话题：/tf, /joint_states
+话题：/tf：发布的是 坐标系之间的变换关系，即RViz用这个确定机器人基座在世界坐标系中的位置，但是不能确定机器人关节的位置。
+话题：/joint_states：发布的是 各关节的角度信息，这个话题被 /robot_state_publisher 节点订阅，最终转换成完整的 TF 变换树，用于确定机器人关节的位置。
+两者结合 才能让 RViz 同时知道：
+1. 机器人在世界中的位置（来自 /tf ）
+2. 各关节的角度（通过 /joint_states → robot_state_publisher → /tf ）
+
+节点：urdf_tutorial_cpp ：
+├── 发布 /tf (odom → axis)     → RViz 知道机器人整体位置
+└── 发布 /joint_states         → robot_state_publisher 使用
+                                    ↓
+                              计算完整 TF 变换树
+                                    ↓
+                              发布 /tf (所有连杆变换) → RViz 显示完整机器人模型
+
+节点：/robot_state_publisher ：
+├── 订阅 /joint_states         → 计算正运动学
+├── 发布 /tf (odom → axis)     → RViz 知道机器人整体位置
+├── 发布 /tf_static           → RViz 显示完整机器人模型
 
 ```
 
